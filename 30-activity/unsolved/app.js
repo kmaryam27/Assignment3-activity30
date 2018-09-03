@@ -43,24 +43,13 @@ const employeeList = [
 
 const command = prompt('input command');
 let inputName;
-
-//********************print functions*************************** */
-
-const printAll = function(){
-  for (let i = 0; i < employeeList.length; i++) {
-    render(`employee${i+1}: -name: ${employeeList[i].name} -Office Number: ${employeeList[i].officeNum} -Telephone Number: ${employeeList[i].phoneNum}`);
-  }
-}
-
-const print = function(i){
-  render(`employee${i+1}: -name: ${employeeList[i].name} -Office Number: ${employeeList[i].officeNum} -Telephone Number: ${employeeList[i].phoneNum}`);
-}
+let field;
 
 //*************************************************************** */
- if (command.toLowerCase() === 'print') {
-   printAll();
+ if (command.toLowerCase() === 'print') {//if client types print
+  $(employeeList).printAll();
  } 
- else if (command.toLowerCase() === 'verify') {
+ else if (command.toLowerCase() === 'verify') {//if client types verify
    inputName = prompt('input name');
    let isExist =false;
 
@@ -71,26 +60,26 @@ const print = function(i){
    }
    render(isExist);
  }
- else if (command.toLowerCase() === 'lookup') {
+ else if (command.toLowerCase() === 'lookup') {//if client types lookup
   inputName = prompt('input name');
 
   for (let i = 0; i < employeeList.length; i++) {
     if (inputName.toUpperCase() === (employeeList[i].name).toUpperCase()) {
-      print(i); 
+      $(employeeList).print(i); 
     }
   }
 } 
-else if(command.toLowerCase() === 'contains'){
+else if(command.toLowerCase() === 'contains'){//if client types contains
     let str = prompt('input string');
     for (let i = 0; i < employeeList.length; i++) {
       if ((employeeList[i].name).toUpperCase().includes(str.toUpperCase())) {
-        print(i);
+        $(employeeList).print(i);
       }
     }
  }
- else if(command.toLowerCase() === 'update'){
+ else if(command.toLowerCase() === 'update'){//if client types update
   inputName = prompt('input name');
-  const field = prompt('input field that you want to change it');
+  field = prompt('input field that you want to change it');
   const value = prompt('input new value for field');
 
   for (let i = 0; i < employeeList.length; i++) {
@@ -104,11 +93,11 @@ else if(command.toLowerCase() === 'contains'){
       else if(field.toLowerCase() === 'telephone number'){
         employeeList[i].phoneNum = value;
       }
-      print(i);
+      $(employeeList).print(i);
     }
   }
 }
-else if(command.toLowerCase() === 'add'){
+else if(command.toLowerCase() === 'add'){//if client types add
   inputName = prompt('input name');
   const officeNum = prompt('input Office Number');
   const phoneNum = prompt('input Phone Number');
@@ -119,9 +108,9 @@ else if(command.toLowerCase() === 'add'){
   officeNum: officeNum
 };
   employeeList.push(employee);
-  printAll();
+  $(employeeList).printAll();
 }
-else if(command.toLowerCase() === 'delete'){
+else if(command.toLowerCase() === 'delete'){//if client types delete
   inputName = prompt('input name');
 
   for (let i = 0; i < employeeList.length; i++) {
@@ -129,5 +118,24 @@ else if(command.toLowerCase() === 'delete'){
       employeeList.splice(i,1);
     } 
   }
-  printAll();
+  $(employeeList).printAll();
+}
+else if (command.toLowerCase() === 'arrange') {//if client types arrange
+  field = prompt('input field that you want to change it');
+  if (field.toLowerCase() === 'name') {
+    employeeList.sort(function(a, b){
+      let nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
+      if (nameA < nameB) //sort string ascending
+          return -1;
+      if (nameA > nameB)
+          return 1;
+      return 0; //default return value (no sorting)
+  });
+  }
+  else if(field.toLowerCase() === 'office number'){
+    employeeList.sort(function(a, b){
+      return a.officeNum-b.officeNum;
+  });
+  }
+  $(employeeList).printAll();
 }

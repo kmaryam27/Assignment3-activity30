@@ -42,6 +42,12 @@ Create a program that does all of the following:
 
 8. Add any new command that you like. 
   * Document the new command in your `readme.md`. 
+   
+   * If the command is `arrange`:
+   * prompt the user for a field they would like to arrange by that
+   * arrange a-z for `name` big number to less nummer for `officeNum`
+   * print and show all arranged `employeeList`
+
 
 
 
